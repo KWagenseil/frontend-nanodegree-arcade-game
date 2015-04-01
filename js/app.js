@@ -1,11 +1,13 @@
-/* var startRow = function() {       // finish this later
+var startSpeed = function() {
+    var ranSpeed = (Math.floor(Math.random() * 2) +1) * 100;
+    return ranSpeed;
+};
 
-}
-
-var startSpeed = function() {       // finish this later
-
-}
-*/
+var row = [60, 145, 230, 315];
+var startRow = function() {
+    getRandomRow = row[Math.floor(Math.random() * row.length)];
+    return getRandomRow;
+};
 
 // Enemies our player must avoid (COMPLETE)
 function Enemy(x,y,speed) {
@@ -16,14 +18,14 @@ function Enemy(x,y,speed) {
 };
 // Update enemy location based on movement, reaching the end, or colliding with the hero
 Enemy.prototype.update = function(dt) {                           // This adds a new method called "update" to our previously defined Enemy class.
-    if (this.x < /*ctx.*/canvas.width) {                          // "dt" is found in the engine.js file
+    if (this.x < ctx.canvas.width) {                              // "dt" is found in the engine.js file
       this.x += this.speed * dt;
-    } else if (this.x && this.startRow(); === Player.x && Player.y) {         // Trying to add a collision update with 'player.position'
-      this.x = 0;
-      this.y = startRow();
-      this.speed = startSpeed();
+    // } else if (this.x && this.startRow() === Player.x && Player.y) {         // Trying to add a collision update with 'player.position'
+    //   this.x = 0;
+    //   this.y = startRow();
+    //   this.speed = startSpeed();
     } else {
-      this.x = 0;
+      this.x = -80;
       this.y = startRow();
       this.speed = startSpeed();
     }
@@ -40,13 +42,18 @@ function Player(x,y) {
     this.x = x;
     this.y = y;
     /* this.sprite = add option to chose hero; */
-    this.sprite = 'images/char-horn-girl.png'
+    this.sprite = 'images/char-boy.png';
 };
 
 Player.prototype.update = function(dt) {              // Player update location
-    if (this.y > /*ctx.*/canvas.height) || (this.x && this.y; === Enemy.x && Enemy.startRow();) {
+    if ((this.y > ctx.canvas.height) || (this.x && this.y === Enemy.x && Enemy.startRow())) {
       player.startOver();
     }
+};
+
+Player.prototype.startOver = function() {
+  this.x = 200;
+  this.y = 400;
 };
 
 Player.prototype.render = function() {                // Loads the hero to the screen
@@ -54,43 +61,31 @@ Player.prototype.render = function() {                // Loads the hero to the s
 };
 
 Player.prototype.handleInput = function(arrow) {
-  if (arrow === "left") {
-      this.x -= /*pixels left*/;
+  if (arrow === "left" && this.x > 25) {
+      this.x -= 100;
   } if
-     (arrow === "up") {
-       this.y -= /*pixels up*/;
+     (arrow === "up" && this.y > 0) {
+       this.y -= 85;
   } if
-     (arrow === "right") {
-       this.x += /*pixels right*/;
+     (arrow === "right" && this.y < 600) {
+       this.x += 100;
   } if
-     (arrow === "down") {
-       this.y += /*pixels down*/;
+     (arrow === "down" && this.x < 400) {
+       this.y += 85;
      };
 }
 
-Player.prototype.startOver = function() {
-  this.x = /*start x*/;
-  this.y = /*start y*/;
-};
 
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-
+// Intiantiated Enemy and Player objects
 var allEnemies= [
-  new Enemy(x,startRow(), startSpeed()),
-  new Enemy(x,startRow(), startSpeed()),
-  new Enemy(x,startRow(), startSpeed()),
-  new Enemy(x,startRow(), startSpeed()),
+  new Enemy(-80, startRow(), startSpeed()),
+  new Enemy(-80, startRow(), startSpeed()),
+  new Enemy(-80, startRow(), startSpeed()),
+  new Enemy(-80, startRow(), startSpeed()),
 ];
 
-var enemy2 =
-var player = new Player();
+var player = new Player(200, 400);
 
-
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
