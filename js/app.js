@@ -20,11 +20,11 @@ Enemy.prototype.update = function(dt) {                           // This adds a
       this.x += this.speed * dt;
     } else if (this.x && this.startRow(); === Player.x && Player.y) {         // Trying to add a collision update with 'player.position'
       this.x = 0;
-      this.y = randomRow();
+      this.y = startRow();
       this.speed = startSpeed();
     } else {
       this.x = 0;
-      this.y = randomRow();
+      this.y = startRow();
       this.speed = startSpeed();
     }
 };
@@ -34,10 +34,9 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// New Player class function
 
-// handleInput() method.
-
-function Player(x,y) {                                // New Player class function
+function Player(x,y) {
     this.x = x;
     this.y = y;
     /* this.sprite = add option to chose hero; */
@@ -69,14 +68,24 @@ Player.prototype.handleInput = function(arrow) {
      };
 }
 
-
-
+Player.prototype.startOver = function() {
+  this.x = /*start x*/;
+  this.y = /*start y*/;
+};
 
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies = [];
+
+var allEnemies= [
+  new Enemy(x,startRow(), startSpeed()),
+  new Enemy(x,startRow(), startSpeed()),
+  new Enemy(x,startRow(), startSpeed()),
+  new Enemy(x,startRow(), startSpeed()),
+];
+
+var enemy2 =
 var player = new Player();
 
 
