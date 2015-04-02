@@ -24,6 +24,7 @@ function Gem(x,y) {
   this.sprite = 'images/Gem Blue.png';
 };
 
+// Gem location and collision code
 Gem.prototype.update = function() {
   for(e=0; e<allGems.length; e++){
       gemPosition = {
@@ -35,6 +36,7 @@ Gem.prototype.update = function() {
       };
 }
 
+//Loads the gems to the screen
 Gem.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -80,6 +82,10 @@ function Player(x,y) {
 Player.prototype.startOver = function() {
   this.x = 200;
   this.y = 400;
+  // If player collects Kevin.png gem, player starts over as Kevin.png
+  // if (allGems.splice(e, 1) === 'images/Kevin.png') {
+  //   this.sprite = 'images/Kevin.png';
+  // }
 };
 
 // Update Player location
@@ -118,14 +124,14 @@ var allEnemies= [
   new Enemy(-101, startRow(), startSpeed()),
 ];
 
-var player = new Player(200, 400);
-
 var allGems= [
-  new Gem(startRow(), startColumn()),
-  new Gem(startRow(), startColumn()),
-  new Gem(startRow(), startColumn()),
-  new Gem(startRow(), startColumn()),
-];
+  new Gem(startColumn()+10, startRow()+30),
+  new Gem(startColumn()+10, startRow()+30),
+  new Gem(startColumn()+10, startRow()+30),
+  new Gem(startColumn()+10, startRow()+30),
+  ];
+
+var player = new Player(200, 400);
 
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
