@@ -151,9 +151,14 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
+        allGems.forEach(function(gem) {
+          gem.render();
+        });
 
         player.render();
     }
+
+
 
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
@@ -172,7 +177,11 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-horn-girl.png',
+        'images/Gem Blue.png',
+        'images/Gem Green.png',
+        'images/Gem Orange.png'
     ]);
     Resources.onReady(init);
 
