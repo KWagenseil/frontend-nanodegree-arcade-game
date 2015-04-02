@@ -1,5 +1,5 @@
 var startSpeed = function() {
-    var ranSpeed = (Math.floor(Math.random() * 2.5) +1) * 100;
+    var ranSpeed = (Math.floor(Math.random() * 3) +1) * 100;
     return ranSpeed;
 };
 
@@ -21,14 +21,23 @@ var startColumn = function() {
 function Gem(x,y) {
   this.x = x;
   this.y = y;
-  this.sprite = 'images/Gem Green.png';
+  this.sprite = 'images/Gem Blue.png';
 };
 
-Gem.prototype.render = function() {
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+Gem.prototype.update = function() {
+  for(e=0; e<allGems.length; e++){
+      gemPosition = {
+          'left':   allGems[e].x,
+          'top': allGems[e].y,
+          'right':  allGems[e].x+75,
+          'bottom':    allGems[e].y+60,
+        };
+      };
 }
 
-
+Gem.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
 
 // New Enemy class function
 function Enemy(x,y,speed) {
@@ -64,7 +73,7 @@ function Player(x,y) {
     this.x = x;
     this.y = y;
 // this.sprite = add option to chose hero;
-    this.sprite = 'images/char-boy.png';
+    this.sprite = 'images/char-horn-girl.png';
 };
 
 // Player reset function
@@ -87,7 +96,7 @@ Player.prototype.render = function() {
 
 // Responding to arrow commands; canvas is 505px wide and 606px tall.
 Player.prototype.handleInput = function(arrow) {
-  if (arrow === "left" && this.x > 25) {
+  if (arrow === "left" && this.x > 0) {
       this.x -= 101;
   } if
      (arrow === "up" && this.y > 0) {
@@ -103,10 +112,10 @@ Player.prototype.handleInput = function(arrow) {
 
 // Intiantiated Enemy and Player objects
 var allEnemies= [
-  new Enemy(-80, startRow(), startSpeed()),
-  new Enemy(-80, startRow(), startSpeed()),
-  new Enemy(-80, startRow(), startSpeed()),
-  new Enemy(-80, startRow(), startSpeed()),
+  new Enemy(-101, startRow(), startSpeed()),
+  new Enemy(-101, startRow(), startSpeed()),
+  new Enemy(-101, startRow(), startSpeed()),
+  new Enemy(-101, startRow(), startSpeed()),
 ];
 
 var player = new Player(200, 400);
