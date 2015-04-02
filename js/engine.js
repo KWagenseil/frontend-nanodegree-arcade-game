@@ -181,7 +181,12 @@ var Engine = (function(global) {
         'images/char-horn-girl.png',
         'images/Gem Blue.png',
         'images/Gem Green.png',
-        'images/Gem Orange.png'
+        'images/Gem Orange.png',
+        {
+          url:'images/Kevin.png',
+          width: 100,
+          height: 100
+        }
     ]);
     Resources.onReady(init);
 

@@ -34,7 +34,18 @@
     /* This is our private image loader function, it is
      * called by the public image loader function.
      */
-    function _load(url) {
+    function _load(resourceParameter) {
+        var url;
+console.log(resourceParameter);
+        if (typeof resourceParameter === "string") {
+          url = resourceParameter;
+        } else {
+          console.log(typeof resourceParameter);
+          url = resourceParameter.url
+        }
+
+        console.log(url);
+
         if(resourceCache[url]) {
             /* If this URL has been previously loaded it will exist within
              * our resourceCache array. Just return that image rather
@@ -45,7 +56,13 @@
             /* This URL has not been previously loaded and is not present
              * within our cache; we'll need to load this image.
              */
-            var img = new Image();
+            var img;
+            // if(CONDITION) {
+              img = new Image(resourceParameter.width, resourceParameter.height);
+            // } else {
+              // img = new Image(SOMETHING.width, SOMETHING.height);
+            // }
+
             img.onload = function() {
                 /* Once our image has properly loaded, add it to our cache
                  * so that we can simply return this image if the developer
