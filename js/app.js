@@ -1,8 +1,3 @@
-var startSpeed = function() {
-    var ranSpeed = (Math.floor(Math.random() * 3) +1) * 100;
-    return ranSpeed;
-};
-
 // only 4 rows that bugs can crawl over
 var row = [60, 145, 230, 315];
 var startRow = function() {
@@ -17,21 +12,37 @@ var startColumn = function() {
     return getStartColumn;
 };
 
+var startSpeed = function() {
+    var ranSpeed = (Math.floor(Math.random() * 3) +1) * 100;
+    return ranSpeed;
+};
+
+// Adding a point system somehow...
+// var points = {
+//   totalScore: 0,
+//   lastGemPoint: 0,
+//   add: function(gemPoints) {
+//     this.totalScore += (gemPoints || 0);
+//     this.lastGemPoint = gemPoints;
+//   }
+// };
+
 // Gem class function
-function Gem(x,y) {
+function Gem(x,y, points) {
   this.x = x;
   this.y = y;
+  this.points = points;
   this.sprite = 'images/Gem Blue.png';
 };
 
 // Gem location and collision code
 Gem.prototype.update = function() {
-  for(e=0; e<allGems.length; e++){
+  for(i=0; i < allGems.length; i++){
       gemPosition = {
-          'left':   allGems[e].x,
-          'top': allGems[e].y,
-          'right':  allGems[e].x+75,
-          'bottom':    allGems[e].y+60,
+          'left':   allGems[i].x,
+          'top': allGems[i].y,
+          'right':  allGems[i].x+75,
+          'bottom':    allGems[i].y+60,
         };
       };
 }
@@ -82,8 +93,8 @@ function Player(x,y) {
 Player.prototype.startOver = function() {
   this.x = 200;
   this.y = 400;
-  // If player collects Kevin.png gem, player starts over as Kevin.png
-  // if (allGems.splice(e, 1) === 'images/Kevin.png') {
+  // If player gets hit by bug, player starts over as Kevin.png
+  // if () {
   //   this.sprite = 'images/Kevin.png';
   // }
 };
@@ -100,7 +111,7 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Responding to arrow commands; canvas is 505px wide and 606px tall.
+// Responding to arrow commands; canvas is 505px wide, 606px tall.
 Player.prototype.handleInput = function(arrow) {
   if (arrow === "left" && this.x > 0) {
       this.x -= 101;
@@ -118,10 +129,10 @@ Player.prototype.handleInput = function(arrow) {
 
 // Intiantiated Enemy and Player objects
 var allEnemies= [
-  new Enemy(-101, startRow(), startSpeed()),
-  new Enemy(-101, startRow(), startSpeed()),
-  new Enemy(-101, startRow(), startSpeed()),
-  new Enemy(-101, startRow(), startSpeed()),
+  new Enemy(-101, startRow(), startSpeed(), 50),
+  new Enemy(-101, startRow(), startSpeed(), 50),
+  new Enemy(-101, startRow(), startSpeed(), 50),
+  new Enemy(-101, startRow(), startSpeed(), 50),
 ];
 
 var allGems= [
