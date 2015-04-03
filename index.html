@@ -8,7 +8,21 @@
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
+    <canvas src="js/engine.js"></canvas>
+    <script>
+
+      ctx.font = "36pt Impact";
+      ctx.textAlign = "center";
+
+      ctx.fillStyle = "white";
+      ctx.fillText("Frogger be like", ctx.canvas.width/2, 40);
+      ctx.fillText(":facepalm:", ctx.canvas.width/2, 635);
+
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 2;
+      ctx.strokeText("Frogger be like", ctx.canvas.width/2, 40);
+      ctx.strokeText(":facepalm:", ctx.canvas.width/2, 635);
+
+    </script>
 </body>
 </html>
-
-<!-- Won't load game yet -->
