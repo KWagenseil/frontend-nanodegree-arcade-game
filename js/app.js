@@ -17,16 +17,6 @@ var startSpeed = function() {
     return ranSpeed;
 };
 
-// Adding a point system somehow...
-// var points = {
-//   totalScore: 0,
-//   lastGemPoint: 0,
-//   add: function(gemPoints) {
-//     this.totalScore += (gemPoints || 0);
-//     this.lastGemPoint = gemPoints;
-//   }
-// };
-
 // Gem class function
 function Gem(x,y, points) {
   this.x = x;
@@ -36,16 +26,27 @@ function Gem(x,y, points) {
 };
 
 // Gem location and collision code
-Gem.prototype.update = function() {
-  for(i=0; i < allGems.length; i++){
+Gem.prototype.update = function(playerPosition) {
+  for(i = 0; i < allGems.length; i++){
       gemPosition = {
           'left':   allGems[i].x,
           'top': allGems[i].y,
-          'right':  allGems[i].x+75,
-          'bottom':    allGems[i].y+60,
+          'right':  allGems[i].x,
+          'bottom':    allGems[i].y,
         };
-      };
-}
+        if (playerPosition.left<gemPosition.right &&
+            playerPosition.top<gemPosition.bottom &&
+            playerPosition.right>gemPosition.left &&
+            playerPosition.bottom>gemPosition.top) {
+          // removes the collected gem
+          allGems.splice(i, 1);
+          // if all gems are collected, no more enemies
+          if(allGems.length < 1) {
+              allEnemies = [];
+          }
+        }
+  }
+};
 
 //Loads the gems to the screen
 Gem.prototype.render = function() {
@@ -64,11 +65,6 @@ function Enemy(x,y,speed) {
 Enemy.prototype.update = function(dt) {
     if (this.x < ctx.canvas.width) {
       this.x += this.speed * dt;
-// Trying to add a collision update with 'player.position'
-//     } else if ((this.x && this.startRow()) === (Player.x && Player.y)) {
-//       this.x = 0;
-//       this.y = startRow();
-//       this.speed = startSpeed();
     } else {
       this.x = -85;
       this.y = startRow();
@@ -93,7 +89,7 @@ function Player(x,y) {
 Player.prototype.startOver = function() {
   this.x = 200;
   this.y = 400;
-  // If player gets hit by bug, player starts over as Kevin.png
+  // Working on: if player gets hit by bug, player starts over as Kevin.png
   // if () {
   //   this.sprite = 'images/Kevin.png';
   // }
@@ -104,7 +100,31 @@ Player.prototype.update = function(dt) {
     if (this.y < -15) {
       player.startOver();
     }
-};
+    // Defines player's area
+    playerPosition = {
+        'left':   this.x,
+        'top': this.y,
+        'right':  this.x+50,
+        'bottom':    this.y+70,
+    }
+    // Iterate through allEnemies and define enemy area
+    for(i = 0; i < allEnemies.length; i++){
+        bugPosition = {
+            'left':   allEnemies[i].x,
+            'top': allEnemies[i].y,
+            'right':  allEnemies[i].x+70,
+            'bottom':    allEnemies[i].y+70,
+        }
+        // Collision detection
+    if(playerPosition.left<bugPosition.right &&
+        playerPosition.top<bugPosition.bottom &&
+        playerPosition.right>bugPosition.left &&
+        playerPosition.bottom>bugPosition.top){
+        player.startOver(); }
+    }
+
+    Gem.prototype.update(playerPosition);
+}
 
 // Loads the hero to the screen
 Player.prototype.render = function() {
@@ -142,6 +162,8 @@ var allGems= [
   new Gem(startColumn()+10, startRow()+30),
   ];
 
+// var heart =  new Heart(startColumn()+10, startRow()+30);
+
 var player = new Player(200, 400);
 
 document.addEventListener('keyup', function(e) {
@@ -154,3 +176,33 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+                                          // add-ons still working on:
+// Adding a point system somehow...
+/* var points = {
+  totalScore: 0,
+  lastGemPoint: 0,
+  add: function(gemPoints) {
+    this.totalScore += (gemPoints || 0);
+    this.lastGemPoint = gemPoints;
+  }
+}; */
+// Heart location and collision code
+/* Heart.prototype.update = function() {
+heartPosition = {
+'left':   heart.x,
+'top': heart.y,
+'right':  heart.x,
+'bottom':    heart.y,
+}
+}; */
+// Implement hearts into the game
+/* function Heart(x,y) {
+this.x = x;
+this.y = y;
+this.sprite = 'images/Heart.png';
+}; */
+//Loads the hearts to the screen
+/* Heart.prototype.render = function() {
+ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}; */
