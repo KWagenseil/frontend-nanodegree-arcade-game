@@ -38,9 +38,9 @@ Gem.prototype.update = function(playerPosition) {
             playerPosition.top<gemPosition.bottom &&
             playerPosition.right>gemPosition.left &&
             playerPosition.bottom>gemPosition.top) {
-          // removes the collected gem
+          // remove collected gem
           allGems.splice(i, 1);
-          // if all gems are collected, no more enemies
+          // kill enemies after all gems are gone
           if(allGems.length < 1) {
               allEnemies = [];
           }
